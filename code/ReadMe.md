@@ -1,0 +1,4 @@
+templates里面放.html文件
+static里面放CSS文件
+img里面存放图片
+其他的代码文件不要改动，VisualGMQ会编码的
