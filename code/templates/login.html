@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="../static/loginstyle.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='loginstyle.css') }}">
 	</head>
 
 	<body>
@@ -45,7 +45,7 @@
 				<div class="sideleft">
 					<h1>性感OJ在线发牌</h1>
 					<br />
-					<p>更有AV女优<strong>VisualGMQ</strong>和<strong>Xianfeng Li</strong>在线陪聊</p>
+					<p>更有AV女优<strong>LiuShun</strong>在线陪聊</p>
 					<br />
 					<p>保证让您享受帝王般的待遇</p>
 					<br />
@@ -56,7 +56,7 @@
 				<!-- 右侧登陆界面 -->
 				<div class="sideright">
 					<div class="index">
-						<form action="#" method="get">
+						<form action="{{ url_for('login') }}" method="post">
 							<p class="headline">用户登录</p>
 							<p class="astyle">用户名：</p>
 							<input type="text" name="username" id="username" placeholder="请输入您的用户名" >
@@ -84,6 +84,11 @@
 				</ul>
 			</div>
 		</div>
+		<script>
+			{% if loginfailed == False %}
+				window.alert("用户名或密码错误，请检查");
+			{% endif %}
+		</script>
 	</body>
 	
 </html>
