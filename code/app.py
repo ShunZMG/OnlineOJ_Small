@@ -1,4 +1,5 @@
 # -*- coding:UTF-8 -*-
+#!/usr/local/bin/python3
 from flask import Flask, render_template, request, session, redirect, url_for
 from log2file import Log
 from dbcodes import *
@@ -6,10 +7,11 @@ from dbcodes import *
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
 
-def initApp():
-    session['dbManager'] = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
-    session['LOGINED'] = False
+dbmanager = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
 
+def initApp():
+    if not session.get('LOGINED'):
+        session['LOGINED'] = False
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -18,14 +20,15 @@ def login():
     if request.method == 'POST':
         Log("recieved POST")
         Log("session['LOGINED']:%s" % session.get('LOGINED'))
-        if session['LOGINED'] == False:
+        if not session.get('LOGINED') or not session['LOGINED']:
             username = request.form['username']
             psd = request.form['password']
             Log("user logined\nusename:%s\npassword:%s" % (username, psd))
-            dbmanager = session['dbManager']
+            #dbmanager = session['dbManager']
             dbmanager.m_useTable('Customers')
             if not dbmanager.m_itemExists(['username, psd'], 'username="%s" AND psd="%s"' % (username, psd)):
-                Log("登录失败")
+                session['LOGINED'] = False
+                Log("登录失败，没有这个用户")
                 return render_template('login.html', loginfailed=False)
             else:
                 Log("登录成功")
@@ -43,7 +46,7 @@ def signup():
     if request.method == 'POST':
         username = request.form['username']
         psd = request.form['psd']
-        dbmanager = session['dbManager']
+        #dbmanager = session['dbManager']
         dbmanager.m_useTable('Customers')
         if not dbmanager.m_itemExists(['username, psd'], 'username="%s" AND psd="%s"' % (username, psd)):
             dbmanager.m_insertItem([username, psd, 'NONE', 0, 0, 0])
@@ -58,6 +61,7 @@ def signup():
 @app.route('/', methods=['GET'])
 def homepage():
     Log("进入主页")
+    initApp()
     return render_template('homepage.html')
 
 
