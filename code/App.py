@@ -34,6 +34,26 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    Log("进入注册页面")
+    global reged
+    reged = False
+    if request.method == 'POST':
+        username = request.form['username']
+        psd = request.form['psd']
+        dbmanager = session['dbManager']
+        dbmanager.m_useTable('Customers')
+        if not dbmanager.m_itemExists(['username, psd'], 'username="%s" AND psd="%s"' % (username, psd)):
+            dbmanager.m_insertItem([username, psd, 'NONE', 0, 0, 0])
+            Log("注册了新用户username:%s, psd:%s" % (username, psd))
+            redirect(url_for('homepage'))
+        else:
+            Log("这个用户已经存在username:%s, psd:%s" % (username, psd))
+            reged = True
+    return render_template('signup.html', reged=reged)
+
+
 @app.route('/', methods=['GET'])
 def homepage():
     Log("进入主页")
