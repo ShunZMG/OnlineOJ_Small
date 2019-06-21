@@ -1,4 +1,3 @@
-# -*- coding:UTF-8 -*-
 from flask import Flask, render_template, request, session, redirect, url_for
 from log2file import Log
 from dbcodes import *
