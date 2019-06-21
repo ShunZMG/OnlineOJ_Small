@@ -4,11 +4,6 @@
 	list-style: none;
 }
 
-/* body {
-			background-color: #C8CCCF;
-			background: url('bg.jpg');
-			background-size: 100%;
-		} */
 body {
 	overflow: hidden;
 	padding: 0;
@@ -76,43 +71,49 @@ body {
 }
 
 .sideright .index {
-	width: 330px;
-	height: 370px;
+	width: 360px;
+	height: 450px;
 	background-color: rgba(255, 255, 255, 0.75);
 	margin: 50px 90px;
+	border-radius: 8px;
 }
 
 .headline {
-	font-size: 22px;
+	font-size: 24px;
 	text-align: center;
-	padding: 20px;
+	padding: 30px;
+	padding-bottom: 20px;
 }
 
 input[type="text"],
-input[type="submit"] {
+input[type="submit"],
+input[type="password"]{
 	-web-kit-appearance: none;
 	-moz-appearance: none;
 	display: block;
 	margin: 0 auto;
 	font-size: 15px;
-	width: 240px;
+	width: 280px;
 }
 
-input[type="text"] {
-	height: 35px;
-	border-radius: 3px;
+input[type="text"],
+input[type="password"]{
+	height: 38px;
+	border-radius: 8px;
 	border: 1px solid #c8cccf;
 	color: #6a6f77;
 	outline: 0;
 }
 
 input[type="submit"] {
-	margin-top: 25px;
-	height: 35px;
+	margin-top: 35px;
+	height: 39px;
 	background: #357eb8;
 	color: #bcedff;
 	font-weight: bold;
 	font-size: 16px;
+	border-radius: 8px;
+	/* border: 1px solid #c8cccf; */
 }
 
 input[type="submit"]:hover {
@@ -121,27 +122,21 @@ input[type="submit"]:hover {
 }
 
 .astyle {
-	margin: 5px 0 5px 42px;
+	margin: 5px 0 5px 36px;
 	font-size: 17px;
 	color: #6a6f77;
+	padding: 8px;
 }
 
 .bstyle {
 	display: block;
 	float: left;
-	margin-left: 46px;
-	font-size: 15px;
-}
-
-.cstyle {
-	display: block;
-	float: right;
-	margin-right: 46px;
+	margin-left: 113px;
 	padding-bottom: 10px;
 	font-size: 15px;
 }
 
-.cstyle a {
+a {
 	text-decoration: none;
 }
 
