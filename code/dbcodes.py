@@ -65,7 +65,7 @@ class DBManager(Test):
         for value in li_value:
             if type(value) == str:
                 value = r'"%s"' % value
-                #print('value:', value)
+                print('value:', value)
             command += '%s ,' % value
         command = command[:len(command)-1] + ');'
         self.log(command)
