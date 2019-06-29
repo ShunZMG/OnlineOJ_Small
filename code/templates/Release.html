@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta name="charset=UTF-8">
+        <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="../static/Home.CSS">
         <title>Release</title>
@@ -24,6 +24,16 @@
                     <ul>
                         <li><img src="{{ url_for('static', filename='./img/mark.png') }}" width="80px" height=80px" alt="logo"></li>
                         <li><h1>发布习题</h1></li>
+                        <!--VisualGMQ新加的功能-->
+                        <form action="{{ url_for('addedQuestion') }}" method="post">
+                            <input type="text" placeholder="请输入题目名称" name="name"/>
+                            <input type="text" placeholder="请输入题目描述" name="context"/>
+                            <input type="text" placeholder="请添加测试用例" name="test"/>
+                            <input type="text" placeholder="请添加所属类型" name="type"/>
+                            <input type="text" placeholder="请添加测试用例结果" name="result"/>
+                            <input type="submit" name="submit"/>
+                        </form>
+                        <!---->
                     </ul>
                     
                 </div>

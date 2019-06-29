@@ -55,7 +55,7 @@ def signup():
 def questions():
     Log("进入题目列表")
     dbmanager.m_useTable("Questions")
-    questions = dbmanager.m_selectItem()
+    questions = dbmanager.m_selectItem(where="checked=1")
     return render_template("QuestionBank.html",questions=questions)
 
 
@@ -75,7 +75,21 @@ def writeQuestion(Qname):
     return render_template("writeQuestion.html", name=Qname, context=file['Context'])
 
 
-@app.route("/competition")
+@app.route('/addedQuestion', methods=["POST"])
+def addedQuestion():
+    Log("用户对题目进行修改了")
+    if not session.get('QUESTION'):
+        session['QUESTION'] = {'Context': request.form['context'], 'Text': [{'Context': request.form['test'], 'Answer': request.form['result']}]}
+        jsontext = json.dumps(session['QUESTION'])
+        filename = request.form['name'] + ".json"
+        with open('./static/questions/' + filename, "w+") as file:
+            file.write(jsontext)
+        dbmanager.m_useTable('Questions')
+        dbmanager.m_insertItem([request.form['name'], 0, 0, request.form['type'], filename, 0])
+    return redirect(url_for('release'))
+
+
+@app.route("/competition", methods=['GET'])
 def competition():
     Log("进入比赛界面")
     return render_template("Competition.html")
