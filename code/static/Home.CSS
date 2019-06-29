@@ -6,10 +6,9 @@ body {
 
 header {
     background-color: #000;
-    background-image: url(../img/head.png);
+    background: linear-gradient( black, floralwhite);
     background-size: 100%;
     background-repeat: no-repeat;
-    background-position: center;
     text-align: left;
     height: 200px;
     margin: 0;
@@ -17,11 +16,8 @@ header {
 }
 
 ul div {
-    width: 100px;
-    height: 20px;
-    margin-left: 92%;
-    margin-top: -22px;
-    
+    float: right;
+    display: inline;
 }
 
 nav {
@@ -40,21 +36,27 @@ nav li {
 }
 
 nav .spe {
-    color: aliceblue;
     margin-top: 50px;
     margin-left: 12px;
+    color: black;
+    text-shadow: 0.1em 0.1em white;
 }
 
 header a {
     color: white;
     text-decoration: none;
-    text-transform: uppercase;
     text-align: center;
+}
+
+footer a{
+    color: white;
+    text-decoration:none;
 }
 
 a:hover {
     text-decoration: underline;
-    background: rgb(16, 223, 43);
+    background: white;
+    color: black;
     border-radius: 2px;
 }
 
@@ -64,12 +66,31 @@ section {
 }
 
 .feature{
-    background: rgb(196, 196, 196);
+    background: #F3EEE5;
     color: black;
     display: flex;
     padding: 20px;
     flex-direction: row;
     flex-wrap: wrap;
+}
+
+.QuestionBank a{
+    text-decoration: none;
+}
+
+.QuestionBank div{
+    width: 75%;
+    margin: 10px 20px ;
+    background: linear-gradient( floralwhite,  rgb(59, 161, 230));
+    box-shadow: 0 0 10px;
+}
+
+.Competition a{
+    text-decoration:none;
+}
+
+.TopicList a{
+    text-decoration: none;
 }
 
 footer{
@@ -79,4 +100,21 @@ footer{
     width: 100%;
     height: 30px;
     line-height: 30px;
+}
+
+
+table {
+    table-layout: fixed;
+    border-collapse: collapse;
+    font-family: Futura, Arial, sans-serif;
+}
+
+th,td {
+    padding: .65em;
+}
+
+th,td {
+    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+    text-align: center;
 }

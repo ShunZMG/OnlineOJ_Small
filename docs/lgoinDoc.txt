@@ -1,6 +1,0 @@
-登录界面
-login form:
-	用户名: name : "username"
-	密码: name : "password"
-	登录： name : "login"
-	记住密码: name : "rempas"
