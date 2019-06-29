@@ -70,6 +70,9 @@
 			$(document).ready(function() {
 				$(".index").fadeOut(0);
 				$(".index").fadeIn(1000);
+				{% if not signuped %}
+					window.alter("用户已存在，请更改用户名");
+				{% endif %}
 			})
 		</script>
 	</body>
