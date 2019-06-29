@@ -1,3 +1,5 @@
+# -*- coding: UTF-8 -*-
+
 from flask import Flask, render_template, request, session, redirect, url_for
 from log2file import Log
 from dbcodes import *
@@ -67,12 +69,22 @@ def writeQuestion(Qname):
     Tpath = dbmanager.m_selectItem(['Tpath'], where="name='%s'" % Qname)[0]
     global jsonfile
     try:
-        jsonfile = open("./static/questions/%s" % Tpath)
+        jsonfile = open("./static/questions/%s" % Tpath,encoding='UTF-8')
     except IOError:
         Log("没有这个文件:%s" % Tpath)
     file = json.load(jsonfile)
     print(file['Context'])
-    return render_template("writeQuestion.html", name=Qname, context=file['Context'])
+    #return render_template("Answer.html", name=Qname, context=file['Context'])
+    return render_template("Answer.html")
+
+
+@app.route("/test", methods=['GET', 'POST'])
+def test():
+    global data
+    data = None
+    if request.method == 'POST':
+        data = request.form['text1']
+    return render_template("test.html", data=data, type=type(data))
 
 
 @app.route('/addedQuestion', methods=["POST"])
@@ -92,7 +104,7 @@ def addedQuestion():
 @app.route("/competition", methods=['GET'])
 def competition():
     Log("进入比赛界面")
-    return render_template("Competition.html")
+    return render_template("TopicList.html")
 
 
 @app.route('/release')
