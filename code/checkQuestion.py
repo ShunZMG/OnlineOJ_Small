@@ -22,7 +22,7 @@ class JavaCompile(Compile):
             file.write(code)
         os.system("javac Main.java")
         os.remove("Main.java")
-        return "Main"
+        return "Main.class"
 
 
 class PythonCompile(Compile):
@@ -48,7 +48,7 @@ class CheckAnswer:
             if compiletype == "cpp":
                 checkstatement = "./%s < testcontext.txt > rst.txt" % rstfile
             if compiletype == "java":
-                checkstatement = "java %s < testcontext.txt > rst.txt" % rstfile
+                checkstatement = "java %s < testcontext.txt > rst.txt" % rstfile.split('.')[0]
             if compiletype == 'python':
                 checkstatement = "python3 %s < testcontext.txt > rst.txt" % rstfile
             os.system(checkstatement)
@@ -57,6 +57,9 @@ class CheckAnswer:
                 result = file.read()
             if result.strip() == test['Answer'].strip():
                 count += 1
+            os.remove("rst.txt")
+            print(rstfile)
+            os.remove(rstfile)
         if count == totlenum:
             return True
         return False
