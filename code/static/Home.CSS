@@ -53,9 +53,10 @@ header a {
 }
 
 a:hover {
-    text-decoration: underline;
-    background: rgb(16, 223, 43);
+    text-decoration: none;
+    /* background: rgb(16, 223, 43); */
     border-radius: 2px;
+	border: 2px solid white;
 }
 
 section {
