@@ -5,9 +5,12 @@ from log2file import Log
 from dbcodes import *
 import json
 import os
+from datetime import timedelta
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
+app.config['DEBUG'] = True
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 
 dbmanager = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
 
@@ -56,8 +59,9 @@ def signup():
 
 @app.route("/admin", methods=['POST', 'GET'])
 def admin():
+    Log("进入管理员界面")
     dbmanager.m_useTable("Customers")
-    cust_name = dbmanager.m_selectItem(['username'])
+    cust_name = dbmanager.m_selectItem(['username', "psd"])
     dbmanager.m_useTable("Questions")
     quest_name = dbmanager.m_selectItem(['name'])
     return render_template("admin.html", questions=quest_name, customers=cust_name)

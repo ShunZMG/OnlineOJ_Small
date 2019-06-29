@@ -30,6 +30,7 @@
 			<form action="{{ url_for('deleteCustom', name=c[0]) }}" method="post">
 			<div class="customer">
 				<p style="display: inline;">{{ c[0] }}</p>
+				<p style="display: inline;">{{ c[1] }}</p>
 				<input type="submit" name="submit" value="删除"/>
 			</div>
 			</form>
