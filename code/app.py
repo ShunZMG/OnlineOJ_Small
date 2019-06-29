@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, session, redirect, url_for
 from log2file import Log
 from dbcodes import *
 import json
+import os
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
@@ -53,6 +54,41 @@ def signup():
     return render_template("signup.html", signuped=True)
 
 
+@app.route("/admin", methods=['POST', 'GET'])
+def admin():
+    dbmanager.m_useTable("Customers")
+    cust_name = dbmanager.m_selectItem(['username'])
+    dbmanager.m_useTable("Questions")
+    quest_name = dbmanager.m_selectItem(['name'])
+    return render_template("admin.html", questions=quest_name, customers=cust_name)
+
+
+@app.route("/admin/deleteCustom/<name>", methods=['POST'])
+def deleteCustom(name):
+    dbmanager.logOn()
+    dbmanager.m_useTable("Customers")
+    dbmanager.m_deleteItem("username='%s'" % name)
+    Log("删除了用户:%s" % name)
+    return redirect(url_for('admin'))
+
+
+@app.route("/admin/deleteQuestion/<name>", methods=['POST'])
+def deleteQuestion(name):
+    dbmanager.logOn()
+    dbmanager.m_useTable("Questions")
+    jsonfile = dbmanager.m_selectItem(["Tpath"], where="name='%s'" % name)[0][0]
+    #print(jsonfile)
+    #os.remove(url_for('static', filename="questions/%s" % jsonfile))
+    os.remove("./static/questions/%s" % jsonfile)
+    dbmanager.m_deleteItem("name='%s'" % name)
+    Log("删除了题目:%s" % name)
+    return redirect(url_for('admin'))
+
+@app.route("/admin/changeQuestion/<name>", methods=['GET', 'POST'])
+def changeQuestion(name):
+    return "change! %s" % name
+
+
 @app.route("/questions")
 def questions():
     Log("进入题目列表")
@@ -76,15 +112,6 @@ def writeQuestion(Qname):
     print(file['Context'])
     #return render_template("Answer.html", name=Qname, context=file['Context'])
     return render_template("Answer.html")
-
-
-@app.route("/test", methods=['GET', 'POST'])
-def test():
-    global data
-    data = None
-    if request.method == 'POST':
-        data = request.form['text1']
-    return render_template("test.html", data=data, type=type(data))
 
 
 @app.route('/addedQuestion', methods=["POST"])

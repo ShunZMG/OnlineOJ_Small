@@ -78,6 +78,14 @@ class DBManager(Test):
             return False
         return True
 
+    def m_deleteItem(self, where=""):
+        command = "DELETE FROM %s" % self.__dbTable
+        if not where == "":
+            command += " WHERE %s" % where
+        command += ';'
+        self.log(command)
+        self.execute(command)
+
     def m_close(self):
         if self.__dbHandle:
             self.__dbHandle.close()
