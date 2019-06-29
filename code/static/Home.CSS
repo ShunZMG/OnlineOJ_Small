@@ -6,7 +6,10 @@ body {
 
 header {
     background-color: #000;
+<<<<<<< HEAD
     background: linear-gradient( black, floralwhite);
+=======
+>>>>>>> fb98183241304001d384e82bc7d6ae29931e5d31
     background-size: 100%;
     background-repeat: no-repeat;
     text-align: left;
@@ -54,10 +57,16 @@ footer a{
 }
 
 a:hover {
+<<<<<<< HEAD
     text-decoration: underline;
     background: white;
     color: black;
+=======
+    text-decoration: none;
+    /* background: rgb(16, 223, 43); */
+>>>>>>> fb98183241304001d384e82bc7d6ae29931e5d31
     border-radius: 2px;
+	border: 2px solid white;
 }
 
 section {
