@@ -3,7 +3,7 @@
     <head>
         <meta name="charset=UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <link rel="stylesheet" href="../static/Home.CSS">
+        <link rel="stylesheet" href="{{ url_for('static', filename='Home.CSS') }}">
         <title>Welcome to zaixianfapaiOJ</title>
     </head>
 
@@ -12,16 +12,16 @@
         <header>
             <nav><!--主导航功能-->
                 <ul><!--无序列表-->
-                    <li><a href="index.html">首页</a></li>
-                    <li><a href="QuestionBank.html" target="_blank">题库</a></li>
-                    <li><a href="Competition.html" target="_blank">比赛</a></li>
-                    <li><a href="Release.html" target="_blank">我要发布</a></li>
+                    <li><a href="{{ url_for('homepage') }}">首页</a></li>
+                    <li><a href="{{ url_for('questions') }}" target="_blank">题库</a></li>
+                    <li><a href="{{ url_for('competition') }}" target="_blank">比赛</a></li>
+                    <li><a href="{{ url_for('release') }}" target="_blank">我要发布</a></li>
                     <div>
-                        <li><a href="login.html" target="_blank">登录/注册</a></li>
+                        <li><a href="{{ url_for('login') }}" target="_blank">登录/注册</a></li>
                     </div>
                 </ul>
                 <div class="spe">
-                    <img src="../img/mark.png" width="80px" height="80px" alt="logo">
+                    <img src="{{ url_for('static', filename='./img/mark.png') }}" width="80px" height="80px" alt="logo">
                 </div>
             </nav>
         </header>
@@ -29,7 +29,7 @@
     <section class="feature">
         <figure>
             <h1>近期推送：</h1>
-            <img src="../img/dajitui.jpg" alt="net work wrong.">
+            <img src=" {{ url_for('static', filename='./img/dajitui.jpg') }}" alt="net work wrong.">
             <figcaption>
                 变成大鸡腿并不是你放弃梦想的理由，只要还能动，便要继续交替双腿前进。
             </figcaption>

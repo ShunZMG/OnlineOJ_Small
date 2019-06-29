@@ -5,10 +5,6 @@ from dbcodes import *
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
 
-def initApp():
-    session['dbManager'] = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
-    session['LOGINED'] = False
-
 
 @app.route('/login', methods=["GET", "POST"])
 def login():
@@ -17,10 +13,10 @@ def login():
     if request.method == 'POST':
         Log("recieved POST")
         Log("session['LOGINED']:%s" % session.get('LOGINED'))
-        if session['LOGINED'] == False:
+        if not session.get('LOGINED'):
             username = request.form['username']
             psd = request.form['password']
-            Log("user logined\nusename:%s\npassword:%s" % (username, psd))
+            Log("用户登入了,\nusename:%s\npassword:%s" % (username, psd))
             dbmanager = session['dbManager']
             dbmanager.m_useTable('Customers')
             if not dbmanager.m_itemExists(['username, psd'], 'username="%s" AND psd="%s"' % (username, psd)):
@@ -34,12 +30,40 @@ def login():
     return render_template('login.html')
 
 
+@app.route('/questions', methods=["GET"])
+def questions():
+    return render_template("QuestionBank.html")
+
+
+@app.route('/competition', methods=["GET"])
+def competition():
+    return render_template("Competition.html")
+
+
+@app.route('/release', methods=["GET"])
+def release():
+    return render_template("Release.html")
+
+
+
+@app.route('/signup', methods=["GET", "POST"])
+def signup():
+    Log("进入signup界面")
+    if request.method == 'POST':
+        username = request.form['username']
+        psd = request.form['password']
+        Log("用户注册, username:%s,password%s" % (username, psd))
+
+    return render_template('signup.html')
+
+
 @app.route('/', methods=['GET'])
 def homepage():
     Log("进入主页")
-    return render_template('homepage.html')
+    if not session.get('LOGINED'):
+        session['LOGINED'] = False
+    return render_template('index.html')
 
 
 if __name__ == '__main__':
-    initApp()
     app.run(debug=True)

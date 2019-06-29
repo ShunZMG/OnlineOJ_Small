@@ -5,7 +5,7 @@
 		<title></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<!-- <link rel="stylesheet" href="{{ url_for('static', filename='loginstyle.css') }}"> -->
-		<link rel="stylesheet" href="../static/loginstyle.css">
+		<link rel="stylesheet" href="{{ url_for('static', filename='loginstyle.css') }}">
 	</head>
 
 	<body>
@@ -28,15 +28,15 @@
 			<!-- 导航 -->
 			<div class="nav">
 				<ul>
-					<li><a href="./index.html">首页</a></li>
-					<li><a href="./QuestionBank.html">题库</a></li>
-					<li><a href="./Competition.html">比赛</a></li>
-					<li><a href="./Release.html">我要发布</a></li>
+					<li><a href="{{ url_for('homepage') }}">首页</a></li>
+					<li><a href="{{ url_for('questions') }}">题库</a></li>
+					<li><a href="{{ url_for('competition') }}">比赛</a></li>
+					<li><a href="{{ url_for('release') }}">我要发布</a></li>
 				</ul>
 
 				<ul>
-					<li style="float: right"><a href="./signup.html">注册</a></li>
-					<li style="float: right"><a href="./login.html">登录</a></li>
+					<li style="float: right"><a href="{{ url_for('signup') }}">注册</a></li>
+					<li style="float: right"><a href="{{ url_for('login') }}">登录</a></li>
 				</ul>
 			</div>
 
