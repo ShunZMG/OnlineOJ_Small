@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
 
-dbmanager = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
+dbmanager = DBManager('onlineOJ', 'lee', 'localhost', 'root')
 
 
 @app.route('/login', methods=["GET", "POST"])
