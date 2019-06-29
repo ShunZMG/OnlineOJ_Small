@@ -1,6 +1,8 @@
 templates里面放.html文件
 static里面放CSS文件
-img里面存放图片
+static/img里面存放图片
+
+static/questions里面存放题目文件(json)
 
 js里面存放javascript文件
 

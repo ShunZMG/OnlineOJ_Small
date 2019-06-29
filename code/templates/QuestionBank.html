@@ -30,8 +30,12 @@
         </header>
    
 
-    <section >
-        <h1>None</h1>
+    <section>
+        <ul>
+        {% for q in questions %}
+            <li style="color: black"><a href="{{ url_for('writeQuestion', Qname=q[0]) }}"><p>题目名称： {{ q[0] }}</p><p>"题目点击量： {{ q[1] }}</p><p>此题被答对的次数：{{ q[2] }}</p><p>题目类型：{{ q[3] }}</p></a></li>
+        {% endfor %}
+        </ul>
     </section>
 
     <footer>
