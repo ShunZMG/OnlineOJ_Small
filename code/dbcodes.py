@@ -86,6 +86,14 @@ class DBManager(Test):
         self.log(command)
         self.execute(command)
 
+    def m_updateItem(self, name, value, where=""):
+        command = "UPDATA %s SET %s=%s" % (self.__dbTable, name, value)
+        if not where == "":
+            command += " where %s" % where
+        command += ';'
+        self.log(command)
+        self.execute(command)
+
     def m_close(self):
         if self.__dbHandle:
             self.__dbHandle.close()
