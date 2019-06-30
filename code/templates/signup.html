@@ -47,13 +47,13 @@
 						<form action="{{ url_for('signup') }}" method="post" style="height: 350px">
 							<p class="headline">注册</p>
 							<p class="astyle">用户名：</p>
-							<input type="text" name="username" id="username" placeholder="  请输入您的用户名">
+							<input type="text" name="username" id="username" placeholder="请输入您的用户名">
 							<br />
 							<p class="astyle">密码：</p>
-							<input type="password" name="password" id="password" placeholder="  请输入您的密码">
+							<input type="password" name="password" id="password" placeholder="请输入您的密码">
 							<br />
 							<p class="astyle">确认密码：</p>
-							<input type="password" name="repassword" id="repassword" placeholder="  请再次输入您的密码" onchange="check(this.value)" />
+							<input type="password" name="repassword" id="repassword" placeholder="请再次输入您的密码" onchange="check(this.value)" />
 							<p class="astyle" id="repasswordCheckBlock"></p>
 							<input type="submit" value="注册" name="login">
 							<br />

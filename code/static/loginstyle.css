@@ -93,20 +93,23 @@ input[type="password"]{
 	display: block;
 	margin: 0 auto;
 	font-size: 15px;
-	width: 280px;
 }
 
 input[type="text"],
 input[type="password"]{
+	width: 264px;
 	height: 38px;
 	border-radius: 8px;
 	border: 1px solid #c8cccf;
 	color: #6a6f77;
 	outline: 0;
+	padding-left: 8px;
+	padding-right: 8px; 
 }
 
 input[type="submit"] {
 	margin-top: 35px;
+	width: 280px;
 	height: 39px;
 	background: #357eb8;
 	color: #bcedff;
