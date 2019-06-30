@@ -4,6 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
         <link rel="stylesheet" href="{{ url_for('static', filename='Home.CSS') }}">
+        <script src="../static/jquery-3.4.1.js"></script>
         <title>Release</title>
     </head>
 
@@ -33,25 +34,59 @@
                     <ul>
                         <li><img src="{{ url_for('static', filename='./img/mark.png') }}" width="80px" height=80px" alt="logo"></li>
                         <li><h1>发布习题</h1></li>
-                        <!--VisualGMQ新加的功能-->
-                        <form action="{{ url_for('addedQuestion') }}" method="post">
-                            <input type="text" placeholder="请输入题目名称" name="name"/>
-                            <input type="text" placeholder="请输入题目描述" name="context"/>
-                            <input type="text" placeholder="请添加测试用例" name="test"/>
-                            <input type="text" placeholder="请添加所属类型" name="type"/>
-                            <input type="text" placeholder="请添加测试用例结果" name="result"/>
-                            <input type="submit" name="submit"/>
-                        </form>
-                        <!---->
                     </ul>
-                    
                 </div>
             </nav>
         </header>
  
 
     <section class="Release">
-        <h1>None</h1>
+        <form action="" method="post">
+			<div class="alldiv">
+				<div class="description">
+					<div>
+						<p>请输入题目名称:</p>
+						<input type="text" name="name" placeholder="请输入题目名称"/>
+					</div>
+			
+					<div>
+						<p>请输入题目类别:</p>
+						<input type="text" name="name" placeholder="请输入题目类别"/><br/>
+					</div>
+				</div>
+				<div class="text">
+					<p>请输入题目内容:</p>
+					<textarea name="context" placeholder="请输入题目内容" style="width: 80%; height: 300px"></textarea>
+				</div>
+
+				<div class="attribute" id="testInstance">
+					<div>
+						<p>测试用例内容:</p>
+						<textarea name="testcontext1" placeholder="请输入测试用例内容"></textarea>
+					</div>
+
+					<div>
+						<p>测试用例结果:</p>
+						<textarea name="testrst1" placeholder="请输入测试用例结果"></textarea>
+					</div>
+				</div>
+				
+				<div class="button">
+					<input id="count" type="hidden" name="count" value="1"/>
+					<input id="newTest" type="button" name="addone"  value="增加一个测试用例"/>
+					<input type="submit" name="submit" value="提交"/>
+				</div>
+			</div>
+		</form>
+		<script>
+			window.onload = function(){
+				$("#newTest").click(function(){
+					document.getElementById("count").value++;
+					var value = document.getElementById("count").value;
+						$("#testInstance").append("<br/><div><p>测试用例内容</p><textarea name=\"testcontext" + value + '"' + " placeholder=\"请输入测试用例内容\"></textarea></div><div><p>测试用例结果</p><textarea name=\"testrst" + value + '"' + " placeholder=\"请输入测试用例结果\"></textarea></div>");
+				});
+			}
+		</script>
     </section>
 
     <footer>
