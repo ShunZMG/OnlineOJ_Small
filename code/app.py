@@ -12,7 +12,7 @@ app.config['SECRET_KEY'] = 'this is secret key'
 app.config['DEBUG'] = True
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = timedelta(seconds=1)
 
-dbmanager = DBManager('onlineOJ', 'root', 'localhost', 'root')
+dbmanager = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -96,6 +96,7 @@ def checkQuestion(name):
     dbmanager.m_updateItem('checked', request.form['ischecked'], "name='%s'" % name)
     return redirect(url_for('admin'))
 
+
 @app.route("/admin/changeQuestion/<name>", methods=['GET', 'POST'])
 def changeQuestion(name):
     return "change! %s" % name
@@ -109,7 +110,7 @@ def questions():
     return render_template("QuestionBank.html",questions=questions)
 
 
-@app.route("/question/<Qname>")
+@app.route("/question/<Qname>", methods=['GET'])
 def writeQuestion(Qname):
     Log("进入写题界面，题目：%s" % Qname)
     dbmanager.logOn()
@@ -122,8 +123,16 @@ def writeQuestion(Qname):
         Log("没有这个文件:%s" % Tpath)
     file = json.load(jsonfile)
     print(file['Context'])
-    #return render_template("Answer.html", name=Qname, context=file['Context'])
-    return render_template("Answer.html")
+    return render_template("Answer.html", name=Qname, context=file['Context'])
+    #return render_template("Answer.html", name=Qname)
+
+
+@app.route("/question/check/<name>", methods=['POST'])
+def checkanswer(name):
+    Log("检查代码答案")
+    Log(request.form['codeArea'])
+    return redirect(url_for("writeQuestion", Qname=name))
+
 
 
 @app.route('/release', methods=["GET", "POST"])
