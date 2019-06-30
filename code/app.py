@@ -1,11 +1,12 @@
 # -*- coding: UTF-8 -*-
 
-from flask import Flask, render_template, request, session, redirect, url_for
+from flask import Flask, render_template, request, session, redirect, url_for, flash
 from log2file import Log
 from dbcodes import *
 import json
 import os
 from datetime import timedelta
+from checkQuestion import CheckAnswer
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
@@ -93,7 +94,7 @@ def deleteQuestion(name):
 def checkQuestion(name):
     dbmanager.logOn()
     dbmanager.m_useTable("Questions")
-    dbmanager.m_updateItem('checked', request.form['ischecked'], "name='%s'" % name)
+    dbmanager.m_updateItem('checked', 1, "name='%s'" % name)
     return redirect(url_for('admin'))
 
 
@@ -131,8 +132,22 @@ def writeQuestion(Qname):
 def checkanswer(name):
     Log("检查代码答案")
     Log(request.form['codeArea'])
+    type = request.form['languages']
+    code = request.form['codeArea']
+    checkobj = CheckAnswer()
+    dbmanager.m_useTable("Questions")
+    Tpath = dbmanager.m_selectItem(['Tpath'], where="name='%s'" % name)[0][0]
+    Log(Tpath)
+    jsonfile = open("./static/questions/%s" % Tpath, "r+", encoding='UTF-8')
+    obj = json.load(jsonfile)
+    jsonfile.close()
+    rst =  checkobj.check(code, obj['Test'], type)
+    Log("结果正确吗：%s" % rst)
+    if rst:
+        flash('check', True)
+    else:
+        flash('check', False)
     return redirect(url_for("writeQuestion", Qname=name))
-
 
 
 @app.route('/release', methods=["GET", "POST"])
@@ -147,12 +162,16 @@ def release():
             #session['QUESTION'] = {'Context': request.form['context'], 'test': test}
             obj = {'Context': request.form['context'], 'Test': test}
             print(obj)
+            dbmanager.logOn()
             jsontext = json.dumps(obj)
             filename = name + ".json"
             with open('./static/questions/' + filename, "w+", encoding='UTF-8') as file:
                 file.write(jsontext)
             dbmanager.m_useTable('Questions')
-            dbmanager.m_insertItem([name, 0, 0, request.form['type'], filename, 0])
+            Log(name)
+            Log(request.form['type'])
+            Log(filename)
+            dbmanager.m_insertItem([name, '0', '0', request.form['type'], filename, '0'])
     return render_template('Release.html')
 
 

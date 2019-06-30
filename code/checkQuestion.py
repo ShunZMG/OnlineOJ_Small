@@ -1,5 +1,6 @@
 import json
 import os
+from flask import url_for
 
 
 class Compile:
@@ -34,32 +35,38 @@ class PythonCompile(Compile):
 
 class CheckAnswer:
     def __init__(self):
-        self.compiles = {"cpp": CppCompile(), "java": JavaCompile(), "python": PythonCompile()}
+        self.compiles = {"c/c++": CppCompile(), "java": JavaCompile(), "python": PythonCompile()}
 
     #testlist是json文件中的Test属性,compiletype为cpp, java, python
     def check(self, code, testlist, compiletype):
+        compiletype = compiletype.lower()
         totlenum = len(testlist)
         count = 0
         for test in testlist:
-            with open("testcontext.txt", "w+") as file:
+            pathcontext = "static/compile/testcontext.txt"
+            with open(pathcontext, "w+") as file:
                 file.write(test['Context'])
             rstfile = self.compiles[compiletype].compile(code)
             checkstatement = ""
+            pathrst = "static/compile/rst.txt"
             if compiletype == "cpp":
-                checkstatement = "./%s < testcontext.txt > rst.txt" % rstfile
+                checkstatement = ("./%s < " + pathcontext + " > " + pathrst) % rstfile
             if compiletype == "java":
-                checkstatement = "java %s < testcontext.txt > rst.txt" % rstfile.split('.')[0]
+                checkstatement = ("java %s < " + pathcontext + " > " + pathrst) % rstfile.split('.')[0]
             if compiletype == 'python':
-                checkstatement = "python3 %s < testcontext.txt > rst.txt" % rstfile
+                checkstatement = ("python3 %s < " + pathcontext + " > " + pathrst) % rstfile
             os.system(checkstatement)
+            print("executed command")
             global result
-            with open("rst.txt", "r+") as file:
+            with open(pathrst, "r+") as file:
                 result = file.read()
+                print(result)
             if result.strip() == test['Answer'].strip():
                 count += 1
-            os.remove("rst.txt")
+            #os.remove("rst.txt")
             print(rstfile)
             os.remove(rstfile)
+            #os.remove("testcontext.txt")
         if count == totlenum:
             return True
         return False
@@ -102,11 +109,11 @@ public class Main{
     javacompile = JavaCompile()
     javacompile.compile(javacode)
 
-    file = open("./static/questions/numplusnum.json")
+    file = open("./static/questions/a加b.json")
     context = json.load(file)
     file.close()
     check = CheckAnswer()
-    if check.check(javacode, context['Test'], "java"):
+    if check.check(pythoncode, context['Test'], "python"):
         print(True)
     else:
         print(False)

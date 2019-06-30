@@ -20,10 +20,12 @@
 				<form action="{{ url_for('deleteQuestion', name=q[0]) }}" method="post">
 					<input type="submit" name="submit" value="删除"/>
 				</form>
+				{% if q[-1] == 0 %}
 				<form action="{{ url_for('checkQuestion', name=q[0]) }}" method="post" id="cbform">
 					<!--have bug!-->
-					<input class="cb" type="checkbox" name="ischecked" value="{{ q[1] }}" {% if q[1] == 1 %} checked="checked" {% endif %}/>
+					<input type="submit" name="submit" value="将题目放到题库里面去"/>
 				</form>
+				{% endif %}
 			</div>
 			{% endfor %}
 		</div>
