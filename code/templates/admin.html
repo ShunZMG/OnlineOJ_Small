@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>管理员界面</title>
+		<link type="text/css" rel="stylesheet" href="../static/admin.css"/>
+	</head>
+	<body>
+		<center><h1>管理员界面</h1></center>
+		<hr/>
+		<div class="questions">
+			<p>题目信息</p>
+			
+			{% for q in questions %}
+			<div class="question">
+				<p style="display: inline;">{{ q[0] }}</p>
+				<form action="{{ url_for('changeQuestion', name=q[0]) }}" method="post">
+					<input type="submit" name="submit" value="修改"/>
+				</form>
+				<form action="{{ url_for('deleteQuestion', name=q[0]) }}" method="post">
+					<input type="submit" name="submit" value="删除"/>
+				</form>
+			</div>
+			{% endfor %}
+		</div>
+		<hr/>
+		<div class="customers">
+			<p>成员信息</p>
+			{% for c in customers %}
+			<form action="{{ url_for('deleteCustom', name=c[0]) }}" method="post">
+			<div class="customer">
+				<p style="display: inline;">{{ c[0] }}</p>
+				<p style="display: inline;">{{ c[1] }}</p>
+				<input type="submit" name="submit" value="删除"/>
+			</div>
+			</form>
+			{% endfor %}
+		</div>
+	</body>
+</html>

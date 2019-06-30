@@ -66,6 +66,7 @@ class CheckAnswer:
 
 
 if __name__ == '__main__':
+    print("这个模块是给代码编译和自动化与测试用例测试的模块。下面会运行它的单元测试")
     pythoncode = '''
 if __name__ == '__main__':
     print("hello world")    
