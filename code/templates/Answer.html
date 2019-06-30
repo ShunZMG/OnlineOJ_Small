@@ -3,7 +3,15 @@
     <head>
         <meta name="charset=UTF-8">
         <meta name="viewport" content="width=device-width,initial-scale=1.0">
-        <link rel="stylesheet" href="{{ url_for('static', filename='Home.CSS') }}">
+        <link rel="stylesheet" href="../static/Home.CSS">
+        <!-- <link rel="stylesheet" href="{{ url_for('static', filename='Home.CSS') }}"> -->
+
+		<link rel="stylesheet" href="../static/CodeMirror/lib/codemirror.css"/>
+        <link rel="stylesheet" href="../static/CodeMirror/theme/idea.css">
+        <script src="../static/CodeMirror/lib/codemirror.js"></script>
+        <script src="../static/CodeMirror/mode/clike/clike.js"></script>
+        <script src="../static/jquery-3.4.1.min.js"></script>
+        <script src="../static/CodeMirror/mode/python/python.js"></script>        
         <title>QuestionBank</title>
     </head>
 
@@ -41,12 +49,88 @@
    
 
     <section class="Answer">
-        <h1>None</h1>
+        <div class="left">
+			When you are old 当你老了
+		<br />
+		--- William Butler Yeats ——威廉·巴特勒·叶芝
+		<br />
+		When you are old and grey and full of sleep, 当你老了，头发花白，睡意沉沉，
+		<br />
+		And nodding by the fire，take down this book, 倦坐在炉边，取下这本书来，
+		<br />
+		And slowly read,and dream of the soft look 慢慢读着，追梦当年的眼神
+		<br />
+		Your eyes had once,and of their shadows deep; 你那柔美的神采与深幽的晕影。
+		<br />
+		How many loved your moments of glad grace, 多少人爱过你昙花一现的身影，
+		<br />
+		And loved your beauty with love false or true, 爱过你的美貌，以虚伪或真情，
+		<br />
+		But one man loved the pilgrim Soul in you 惟独一人曾爱你那朝圣者的心，
+		<br />
+		And loved the sorrows of your changing face; 爱你哀戚的脸上岁月的留痕。
+		<br />
+		And bending down beside the glowing bars, 在炉罩边低眉弯腰，
+		<br />
+		Murmur,a little sadly,how Love fled 忧戚沉思，喃喃而语，
+		<br />
+		And paced upon the mountains overhead 爱情是怎样逝去，又怎样步上群山，
+		<br />
+		And hid his face amid a crowd of stars. 怎样在繁星之间藏住了脸。
+		</div>
+		<div class="right">
+            <!-- 下拉选，文本域， -->
+            <form action="{{url_for('Answer')}}" method="POST">
+                <p style="margin-left:15px">代码编辑区</p>
+                <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;选择语言：</p>
+                <select name="languages" id="languages"> 
+                    <option value="C/C++">C/C++</option>
+                    <option value="Java">Java</option>
+                    <option value="Python">Python</option>
+                </select>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="submit" id="submit" value="提交"/>
+                <input type="reset" id="reset" value="重置" >
+                <br/>
+				<textarea name="codeArea" id="codeArea" rows="20" rols="30"></textarea>
+                
+            </form>
+		</div>
     </section>
-
     <footer>
         Welcome to contact us with <a href="https://github.com/VisualGMQ" target="view-window">https://github.com/VisualGMQ</a>
     </footer>
 
+    <script type="text/javascript">
+        //CodeMirror实例
+		var myText = document.getElementById('codeArea');
+		var editor = CodeMirror.fromTextArea(myText,{
+			mode:"text/x-c++",
+			lineNumbers:true,
+			theme:"idea",
+            gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
+            lineWrapping: true,
+            matchBrackets: true
+        });
+        editor.setSize('auto','600px');
+
+        //下拉框实现选择不同的语言模式
+        $('#languages').change(function(){
+            var lang = $('#languages option:selected').text();
+            if(lang == "C/C++"){
+                editor.refresh();
+                editor.setOption("mode","text/x-c++");
+            }else if(lang == "Java"){
+                editor.refresh();
+                editor.setOption("mode","text/x-java");
+            }else if(lang == "Python"){
+                editor.refresh();
+                editor.setOption("mode","text/x-python");
+            }
+        });
+        $('#reset').click(function(){
+            editor.setValue("");
+        });
+	</script>
     </body>
 </html>

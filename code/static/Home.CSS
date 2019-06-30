@@ -119,7 +119,6 @@ th,td {
     text-align: center;
 }
 
-
 .description div {
     display: inline-block;
     width: 300px;
@@ -149,4 +148,37 @@ textarea {
 .Release .alldiv {
     width: 85%;
     margin: auto;
+
+.left{
+    width: 55%;
+    height: 600px;
+	float: left;
+	text-align: center;
+}
+
+.right{
+    width: 45%;
+	float: left;
+    background:#ddd;
+    margin: 0px;
+    padding: 0px;
+}
+
+.right p{
+    margin: 0px auto;
+    float: left;
+}
+
+#codeArea{
+    width: 95%;	
+    margin: 0px;
+    padding: 0px;
+    float: left; 
+	position: absolute;
+}
+
+.CodeMirror {
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
 }
