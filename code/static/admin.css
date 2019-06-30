@@ -1,0 +1,9 @@
+div {
+	border-radius: 20px;
+	border-width: 1px;
+	border-style: solid;
+}
+
+input {
+	float: right;
+}
