@@ -20,6 +20,10 @@
 				<form action="{{ url_for('deleteQuestion', name=q[0]) }}" method="post">
 					<input type="submit" name="submit" value="删除"/>
 				</form>
+				<form action="{{ url_for('checkQuestion', name=q[0]) }}" method="post" id="cbform">
+					<!--have bug!-->
+					<input class="cb" type="checkbox" name="ischecked" value="{{ q[1] }}" {% if q[1] == 1 %} checked="checked" {% endif %}/>
+				</form>
 			</div>
 			{% endfor %}
 		</div>
@@ -36,5 +40,19 @@
 			</form>
 			{% endfor %}
 		</div>
+		<script>
+			window.onload = function(){
+				var cbs = document.getElementsByClassName("cb");
+				for(var i=0;i<cbs.length;i++)
+					cbs[i].onclick = function(checkbox){
+						if(checkbox.checked)
+							checkbox.value = 1;
+						else
+							checkbox.value = 0;
+						document.getElementById("cbform").submit();
+					}
+					
+			}
+		</script>
 	</body>
 </html>

@@ -63,7 +63,7 @@ def admin():
     dbmanager.m_useTable("Customers")
     cust_name = dbmanager.m_selectItem(['username', "psd"])
     dbmanager.m_useTable("Questions")
-    quest_name = dbmanager.m_selectItem(['name'])
+    quest_name = dbmanager.m_selectItem(['name', 'checked'])
     return render_template("admin.html", questions=quest_name, customers=cust_name)
 
 
@@ -86,6 +86,14 @@ def deleteQuestion(name):
     os.remove("./static/questions/%s" % jsonfile)
     dbmanager.m_deleteItem("name='%s'" % name)
     Log("删除了题目:%s" % name)
+    return redirect(url_for('admin'))
+
+
+@app.route("/admin/checkQuestion/<name>", methods=['POST'])
+def checkQuestion(name):
+    dbmanager.logOn()
+    dbmanager.m_useTable("Questions")
+    dbmanager.m_updateItem('checked', request.form['ischecked'], "name='%s'" % name)
     return redirect(url_for('admin'))
 
 @app.route("/admin/changeQuestion/<name>", methods=['GET', 'POST'])
@@ -118,18 +126,26 @@ def writeQuestion(Qname):
     return render_template("Answer.html")
 
 
-@app.route('/addedQuestion', methods=["POST"])
-def addedQuestion():
-    Log("用户对题目进行修改了")
-    if not session.get('QUESTION'):
-        session['QUESTION'] = {'Context': request.form['context'], 'Text': [{'Context': request.form['test'], 'Answer': request.form['result']}]}
-        jsontext = json.dumps(session['QUESTION'])
-        filename = request.form['name'] + ".json"
-        with open('./static/questions/' + filename, "w+") as file:
-            file.write(jsontext)
-        dbmanager.m_useTable('Questions')
-        dbmanager.m_insertItem([request.form['name'], 0, 0, request.form['type'], filename, 0])
-    return redirect(url_for('release'))
+@app.route('/release', methods=["GET", "POST"])
+def release():
+    Log("用户进入发布页面了")
+    if request.method == 'POST':
+        if not session.get('QUESTION'):
+            name = request.form['name']
+            test = []
+            for t in range(1, int(request.form['count']) + 1):
+                test.append({'Context': request.form['testcontext%s' % t].strip(), 'Answer': request.form['testrst%s' % t].strip()})
+            #session['QUESTION'] = {'Context': request.form['context'], 'test': test}
+            obj = {'Context': request.form['context'], 'Test': test}
+            print(obj)
+            jsontext = json.dumps(obj)
+            filename = name + ".json"
+            with open('./static/questions/' + filename, "w+", encoding='UTF-8') as file:
+                file.write(jsontext)
+            dbmanager.m_useTable('Questions')
+            dbmanager.m_insertItem([name, 0, 0, request.form['type'], filename, 0])
+    return render_template('Release.html')
+
 
 
 @app.route("/competition", methods=['GET'])
@@ -138,10 +154,13 @@ def competition():
     return render_template("TopicList.html")
 
 
+
+'''
 @app.route('/release')
 def release():
     Log("进入Release页面")
     return render_template('Release.html')
+'''
 
 
 @app.route('/', methods=['GET'])
