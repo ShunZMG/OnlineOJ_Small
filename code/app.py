@@ -6,7 +6,7 @@ import json
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'this is secret key'
 
-dbmanager = DBManager('onlineOJ', 'ComPro32API', 'localhost', 'root')
+dbmanager = DBManager('onlineOJ', 'root', 'localhost', 'root')
 
 
 @app.route('/login', methods=["GET", "POST"])
@@ -67,12 +67,12 @@ def writeQuestion(Qname):
     Tpath = dbmanager.m_selectItem(['Tpath'], where="name='%s'" % Qname)[0]
     global jsonfile
     try:
-        jsonfile = open("./static/questions/%s" % Tpath)
+        jsonfile = open("./static/questions/%s" % Tpath,encoding='UTF-8')
     except IOError:
         Log("没有这个文件:%s" % Tpath)
     file = json.load(jsonfile)
     print(file['Context'])
-    return render_template("writeQuestion.html", name=Qname, context=file['Context'])
+    return render_template("Answer.html")
 
 
 @app.route('/addedQuestion', methods=["POST"])
